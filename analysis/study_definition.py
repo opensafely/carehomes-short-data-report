@@ -57,6 +57,14 @@ study = StudyDefinition(
         },
     ),
 
+    #nhse specified codes
+
+        nhse_care_home_des=patients.with_these_clinical_events(
+        nhse_care_home_des_codes,
+        returning="binary_flag",
+        return_expectations={"incidence": 0.1},
+    ),
+
     # https://github.com/opensafely/risk-factors-research/issues/49
     age=patients.age_as_of(
         "2020-02-01",
