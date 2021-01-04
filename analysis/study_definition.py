@@ -2,27 +2,18 @@
 # Import functions
 
 from cohortextractor import (
-    StudyDefinition, 
-    patients, 
-    codelist, 
-    codelist_from_csv
+    StudyDefinition,
+    patients,
+    codelist_from_csv,
+    codelist,
+    filter_codes_by_category,
+    combine_codelists,
 )
+
 
 # Import codelists
 
-chronic_cardiac_disease_codes = codelist_from_csv(
-    "codelists/opensafely-chronic-cardiac-disease.csv", system="ctv3", column="CTV3ID"
-)
-chronic_liver_disease_codes = codelist_from_csv(
-    "codelists/opensafely-chronic-liver-disease.csv", system="ctv3", column="CTV3ID"
-)
-salbutamol_codes = codelist_from_csv(
-    "codelists/opensafely-asthma-inhaler-salbutamol-medication.csv",
-    system="snomed",
-    column="id",
-)
-systolic_blood_pressure_codes = codelist(["2469."], system="ctv3")
-diastolic_blood_pressure_codes = codelist(["246A."], system="ctv3")
+from codelists import *
 
 
 # Specifiy study defeinition
