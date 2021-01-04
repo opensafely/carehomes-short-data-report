@@ -209,14 +209,46 @@ ageband_narrow = patients.categorised_as(
         },
     ),
 
-    # https://github.com/opensafely/risk-factors-research/issues/45
-    imd=patients.address_as_of(
-        "2020-02-01",
+       # Indices of Multplie Deprivation
+    index_of_multiple_deprivation=patients.address_as_of(
+        "2020-12-07",
         returning="index_of_multiple_deprivation",
         round_to_nearest=100,
         return_expectations={
             "rate": "universal",
-            "category": {"ratios": {"100": 0.1, "200": 0.2, "300": 0.7}},
+            "category": {
+                "ratios": {
+                    "0": 0.05,
+                    "1000": 0.19,
+                    "9000": 0.19,
+                    "15000": 0.19,
+                    "22000": 0.19,
+                    "30000": 0.19,
+                }
+            },
+        },
+    ),
+    imd=patients.categorised_as(
+        {
+            "0": "DEFAULT",
+            "1": """index_of_multiple_deprivation >=1 AND index_of_multiple_deprivation < 32844*1/5""",
+            "2": """index_of_multiple_deprivation >= 32844*1/5 AND index_of_multiple_deprivation < 32844*2/5""",
+            "3": """index_of_multiple_deprivation >= 32844*2/5 AND index_of_multiple_deprivation < 32844*3/5""",
+            "4": """index_of_multiple_deprivation >= 32844*3/5 AND index_of_multiple_deprivation < 32844*4/5""",
+            "5": """index_of_multiple_deprivation >= 32844*4/5 AND index_of_multiple_deprivation < 32844"""  
+            },
+        return_expectations={
+            "rate": "universal",
+            "category": {
+                "ratios": {
+                    "0": 0.05,
+                    "1": 0.19,
+                    "2": 0.19,
+                    "3": 0.19,
+                    "4": 0.19,
+                    "5": 0.19,
+                }
+            },
         },
     ),
 
