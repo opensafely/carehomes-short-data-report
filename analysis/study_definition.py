@@ -66,15 +66,46 @@ study = StudyDefinition(
         returning="binary_flag",
         return_expectations={"incidence": 0.1},
     ),
-
-    # https://github.com/opensafely/risk-factors-research/issues/49
-    age=patients.age_as_of(
-        "2020-02-01",
+#age groups
+ age=patients.age_as_of(
+        "2020-12-07",  # day before vaccine campaign start
         return_expectations={
             "rate": "universal",
             "int": {"distribution": "population_ages"},
         },
     ),
+
+    ageband=patients.categorised_as(
+        {
+            "0": "DEFAULT",
+            "0-19": """ age >= 0 AND age < 20""",
+            "20-29": """ age >= 20 AND age < 30""",
+            "30-39": """ age >= 30 AND age < 40""",
+            "40-49": """ age >= 40 AND age < 50""",
+            "50-59": """ age >= 50 AND age < 60""",
+            "60-69": """ age >= 60 AND age < 70""",
+            "70-79": """ age >= 70 AND age < 80""",
+            "80+": """ age >=  80 AND age < 120""",  # age eligibility currently set at 80
+        },
+        return_expectations={
+            "rate": "universal",
+            "category": {
+                "ratios": {
+                    "0-19": 0.125,
+                    "20-29": 0.125,
+                    "30-39": 0.125,
+                    "40-49": 0.125,
+                    "50-59": 0.125,
+                    "60-69": 0.125,
+                    "70-79": 0.125,
+                    "80+": 0.125,
+                }
+            },
+        },
+    ),
+
+
+
     
     # https://github.com/opensafely/risk-factors-research/issues/46
     sex=patients.sex(
