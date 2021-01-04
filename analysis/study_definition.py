@@ -262,14 +262,18 @@ ageband_narrow = patients.categorised_as(
         },
     ),
  
-    # https://codelists.opensafely.org/codelist/opensafely/asthma-inhaler-salbutamol-medication/2020-04-15/
-    recent_salbutamol_count=patients.with_these_medications(
-        salbutamol_codes,
-        between=["2018-02-01", "2020-02-01"],
-        returning="number_of_matches_in_period",
+ #covid vacc
+    covid_vacc=patients.with_tpp_vaccination_record(
+        target_disease_matches="SARS-2 CORONAVIRUS",
+        on_or_after="2020-12-01",  
+        find_first_match_in_period=True,
+        returning="date",
+        date_format="YYYY-MM-DD",
         return_expectations={
-            "incidence": 0.6,
-            "int": {"distribution": "normal", "mean": 8, "stddev": 2},
+            "date": {
+                "earliest": "2020-12-08",  # first vaccine administered on the 8/12
+                "latest": "2020-12-30",
+            }
         },
     ),
 )
