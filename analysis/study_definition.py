@@ -27,8 +27,10 @@ study = StudyDefinition(
     # This line defines the study population
     population= population=patients.satisfying(
         """
-        tpp_care_home_type != "U"))
- 
+        tpp_care_home_type != "U"
+        OR
+        nhse_care_home_des=1
+
         """
     ),
 
