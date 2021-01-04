@@ -1,3 +1,6 @@
+# Care Homes Short Data Report
+There are various ways in which care or nursing home residence status may be assessed in OpenSAFELY. This short data report describes the different methods of assessing residence status, describes the charateristics of the populations and helps inform analysis of care for people in care homes during the COVID-19 pandemic. 
+
 # OpenSAFELY Research Template
 
 This is a template repository for making new OpenSAFELY resarch projects.
