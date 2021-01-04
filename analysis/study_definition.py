@@ -75,7 +75,7 @@ study = StudyDefinition(
         },
     ),
 
-    ageband=patients.categorised_as(
+    ageband_broad=patients.categorised_as(
         {
             "0": "DEFAULT",
             "0-19": """ age >= 0 AND age < 20""",
@@ -85,7 +85,7 @@ study = StudyDefinition(
             "50-59": """ age >= 50 AND age < 60""",
             "60-69": """ age >= 60 AND age < 70""",
             "70-79": """ age >= 70 AND age < 80""",
-            "80+": """ age >=  80 AND age < 120""",  # age eligibility currently set at 80
+            "80+": """ age >=  80 AND age < 120""",  
         },
         return_expectations={
             "rate": "universal",
@@ -104,7 +104,18 @@ study = StudyDefinition(
         },
     ),
 
-
+ageband_narrow = patients.categorised_as(
+        {   
+            "0": "DEFAULT",
+            "0-19": """ age >= 0 AND age < 20""",
+            "20-65": """ age >=  20 AND age < 65""",
+            "65+": """ age >=  65 AND age < 120""",
+        },
+        return_expectations={
+            "rate":"universal",
+            "category": {"ratios": {"0-19": 0.2, "20-65": 0.1, "65+":0.7}}
+        },
+    ),
 
     
     # https://github.com/opensafely/risk-factors-research/issues/46
