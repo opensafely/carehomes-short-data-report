@@ -25,8 +25,36 @@ study = StudyDefinition(
         "rate": "exponential_increase",
     },
     # This line defines the study population
-    population=patients.registered_with_one_practice_between(
-        "2019-02-01", "2020-02-01"
+    population= population=patients.satisfying(
+        """
+        tpp_care_home_type != "U"))
+ 
+        """
+    ),
+
+    # CAREHOME STATUS
+
+    #tpp
+    tpp_care_home_type=patients.care_home_status_as_of(
+        "2020-12-07",
+        categorised_as={
+            "PC": """
+              IsPotentialCareHome
+              AND LocationDoesNotRequireNursing='Y'
+              AND LocationRequiresNursing='N'
+            """,
+            "PN": """
+              IsPotentialCareHome
+              AND LocationDoesNotRequireNursing='N'
+              AND LocationRequiresNursing='Y'
+            """,
+            "PS": "IsPotentialCareHome",
+            "U": "DEFAULT",
+        },
+        return_expectations={
+            "rate": "universal",
+            "category": {"ratios": {"PC": 0.05, "PN": 0.05, "PS": 0.05, "U": 0.85,},},
+        },
     ),
 
     # https://github.com/opensafely/risk-factors-research/issues/49
