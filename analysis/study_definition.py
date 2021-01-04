@@ -21,8 +21,9 @@ from codelists import *
 study = StudyDefinition(
     # Configure the expectations framework
     default_expectations={
-        "date": {"earliest": "1900-01-01", "latest": "today"},
-        "rate": "exponential_increase",
+        "date": {"earliest": "1970-01-01", "latest": "today"},
+        "rate": "uniform",
+        "incidence": 0.2,
     },
     # This line defines the study population
     population=patients.satisfying(
