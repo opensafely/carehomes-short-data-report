@@ -188,6 +188,27 @@ ageband_narrow = patients.categorised_as(
         },
     ),
 
+       # NHS administrative region
+    region=patients.registered_practice_as_of(
+        "2020-12-07",
+        returning="nuts1_region_name",
+        return_expectations={
+            "rate": "universal",
+            "category": {
+                "ratios": {
+                    "North East": 0.1,
+                    "North West": 0.1,
+                    "Yorkshire and the Humber": 0.2,
+                    "East Midlands": 0.1,
+                    "West Midlands": 0.1,
+                    "East of England": 0.1,
+                    "London": 0.1,
+                    "South East": 0.2,
+                },
+            },
+        },
+    ),
+
     # https://github.com/opensafely/risk-factors-research/issues/45
     imd=patients.address_as_of(
         "2020-02-01",
