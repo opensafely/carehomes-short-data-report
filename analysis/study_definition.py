@@ -25,7 +25,7 @@ study = StudyDefinition(
         "rate": "exponential_increase",
     },
     # This line defines the study population
-    population= population=patients.satisfying(
+    population=patients.satisfying(
         """
         tpp_care_home_type != "U"
         OR
@@ -59,8 +59,7 @@ study = StudyDefinition(
         },
     ),
 
-    #nhse specified codes
-
+#nhse specified codes
         nhse_care_home_des=patients.with_these_clinical_events(
         nhse_care_home_des_codes,
         returning="binary_flag",

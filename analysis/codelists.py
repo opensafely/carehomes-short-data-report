@@ -1,3 +1,8 @@
+from cohortextractor import (
+    codelist,
+    codelist_from_csv,
+)
+
 nhse_care_home_des_codes = codelist_from_csv(
     "codelists/opensafely-nhs-england-care-homes-residential-status-ctv3.csv",
     system="ctv3",
