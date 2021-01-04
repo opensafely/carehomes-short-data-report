@@ -126,62 +126,45 @@ ageband_narrow = patients.categorised_as(
         }
     ),
     
-    # https://codelists.opensafely.org/codelist/opensafely/chronic-cardiac-disease/2020-04-08/
-    chronic_cardiac_disease=patients.with_these_clinical_events(
-        chronic_cardiac_disease_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={"incidence": 0.2},
-    ),
-
-    # https://codelists.opensafely.org/codelist/opensafely/chronic-liver-disease/2020-06-02/
-    chronic_liver_disease=patients.with_these_clinical_events(
-        chronic_liver_disease_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
+ # ETHNICITY IN 16 CATEGORIES
+    ethnicity_16=patients.with_these_clinical_events(
+        ethnicity_codes_16,
+        returning="category",
+        find_last_match_in_period=True,
+        include_date_of_match=False,
         return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
+            "category": {
+                "ratios": {
+                    "1": 0.0625,
+                    "2": 0.0625,
+                    "3": 0.0625,
+                    "4": 0.0625,
+                    "5": 0.0625,
+                    "6": 0.0625,
+                    "7": 0.0625,
+                    "8": 0.0625,
+                    "9": 0.0625,
+                    "10": 0.0625,
+                    "11": 0.0625,
+                    "12": 0.0625,
+                    "13": 0.0625,
+                    "14": 0.0625,
+                    "15": 0.0625,
+                    "16": 0.0625,
+                }
+            },
+            "incidence": 0.75,
         },
     ),
-
-    # https://github.com/opensafely/risk-factors-research/issues/51
-    bmi=patients.most_recent_bmi(
-        on_or_after="2010-02-01",
-        minimum_age_at_measurement=16,
-        include_measurement_date=True,
-        include_month=True,
+    # ETHNICITY IN 6 CATEGORIES
+    ethnicity=patients.with_these_clinical_events(
+        ethnicity_codes,
+        returning="category",
+        find_last_match_in_period=True,
+        include_date_of_match=False,
         return_expectations={
-            "incidence": 0.6,
-            "float": {"distribution": "normal", "mean": 35, "stddev": 10},
-        },
-    ),
-
-    # https://github.com/opensafely/risk-factors-research/issues/48
-    bp_sys=patients.mean_recorded_value(
-        systolic_blood_pressure_codes,
-        on_most_recent_day_of_measurement=True,
-        on_or_before="2020-02-01",
-        include_measurement_date=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.6,
-            "float": {"distribution": "normal", "mean": 80, "stddev": 10},
-        },
-    ),
-    
-    # https://github.com/opensafely/risk-factors-research/issues/48
-    bp_dias=patients.mean_recorded_value(
-        diastolic_blood_pressure_codes,
-        on_most_recent_day_of_measurement=True,
-        on_or_before="2020-02-01",
-        include_measurement_date=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.6,
-            "float": {"distribution": "normal", "mean": 120, "stddev": 10},
+            "category": {"ratios": {"1": 0.2, "2": 0.2, "3": 0.2, "4": 0.2, "5": 0.2}},
+            "incidence": 0.75,
         },
     ),
 
