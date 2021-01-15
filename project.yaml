@@ -11,10 +11,10 @@ actions:
       highly_sensitive:
         cohort: output/input.csv
 
-  run_model:
-    run: stata-mp:latest analysis/model.do
+  run_report:
+    run: r:latest analysis/report.R output/input.csv
     needs: [generate_study_population]
     outputs:
       moderately_sensitive:
-        log: logs/model.log
+        log: report_output.txt
 

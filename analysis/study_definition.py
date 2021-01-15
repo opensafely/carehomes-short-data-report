@@ -184,7 +184,7 @@ ageband_narrow = patients.categorised_as(
         returning="msoa_code",
         return_expectations={
             "rate": "universal",
-            "category": {"ratios": {"MSOA1": 0.5, "MSOA2": 0.5}},
+            "category": {"ratios": {"E0200001": 0.5, "E0200002": 0.5}},
         },
     ),
 
