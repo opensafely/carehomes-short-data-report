@@ -17,8 +17,8 @@ library(knitr)
 # library(here)
 # setwd(here::here())
 
-# args <- c("output/input.csv")
-args = commandArgs(trailingOnly=TRUE)
+args <- c("output/input.csv", "output/cqc_by_msoa.csv")
+# args = commandArgs(trailingOnly=TRUE)
 
 options(datatable.old.fread.datetime.character=TRUE)
 
@@ -65,5 +65,19 @@ ch_res %>%
   group_split() -> by_source
 
 lapply(by_source, summary)
+
+## Compare MSOA totals with CQC beds
+
+ch_res %>% 
+  group_by(msoa) %>% 
+  summarise(n.tpp = sum(tpp_care_home_ind == 1),
+            n.nhse = sum(nhse_care_home_des == 1)) -> ch_res_by_msoa
+
+cqc_msoa <- fread(args[2], data.table = FALSE, na.strings = "") %>%
+  full_join(ch_res_by_msoa, by = c("msoa11cd" = "msoa")) %>%
+  mutate(tpp_perc_cqc_beds = n.tpp*100/n.beds,
+         nhse_perc_cqc_beds = n.nhse*100/n.beds)
+
+summary(cqc_msoa)
 
 sink()
