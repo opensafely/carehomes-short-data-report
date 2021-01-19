@@ -17,8 +17,10 @@ library(knitr)
 # library(here)
 # setwd(here::here())
 
-# args <- c("data/pc_to_msoa.csv","data/carehomes_cqc.csv")
-args = commandArgs(trailingOnly=TRUE)
+# args <- c("data/pc_to_msoa.csv","data/4_January_2021_HSCA_Active_Locations.csv")
+args <- c("data/pc_to_msoa.csv","data/carehomes_cqc.csv")
+
+# args = commandArgs(trailingOnly=TRUE)
 
 options(datatable.old.fread.datetime.character=TRUE)
 
@@ -39,6 +41,8 @@ cqc <- fread(args[2], data.table = FALSE) %>%
 
 print(paste("Total with `care home = Y`: ", nrow(cqc)))
 
+print(paste("Total care home beds: ", sum(cqc$care.homes.beds, na.rm = TRUE)))
+
 names(cqc) <- str_replace(names(cqc),"regulated.activity..","")
 names(cqc) <- str_replace(names(cqc),"service.type..","")
 names(cqc) <- str_replace(names(cqc),"service.user.band..","")
@@ -56,6 +60,8 @@ cqc_select <- cqc %>%
   mutate(across(is.character, as.factor)) 
 
 print(paste("With `service user band - older.people`: ", nrow(cqc_select)))
+print(paste("Total beds, with `service user band - older.people`: ", sum(cqc_select$care.homes.beds, na.rm = TRUE)))
+
 print(paste("Matched with MSOA: ", nrow(filter(cqc_select, !is.na(msoa11cd)))))
 
 summary(cqc_select)
@@ -65,6 +71,10 @@ table(cqc_select$nursing.or.personal.care, cqc_select$care.home.service.without.
 
 table(cqc_select$nursing.care, cqc_select$care.home.service.with.nursing)
 table(cqc_select$personal.care, cqc_select$care.home.service.without.nursing)
+
+cqc_select %>%
+  group_by(care.home.service.with.nursing) %>%
+  summarise(beds = sum(care.homes.beds))
 
 cqc_msoa <- cqc_select %>%
   group_by(location.region, msoa11cd, msoa11nm) %>%
