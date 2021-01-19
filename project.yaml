@@ -13,7 +13,7 @@ actions:
         
   setup_cqc:
     run: r:latest analysis/setup_cqc_data.R data/pc_to_msoa.csv data/carehomes_cqc.csv
-    needs: 
+    needs: [generate_study_population]
     outputs:
       moderately_sensitive:
         log: cqc_setup_log.txt
@@ -21,7 +21,7 @@ actions:
         data2: cqc_by_msoa.csv
 
   run_report:
-    run: r:latest analysis/report.R output/input.csv
+    run: r:latest analysis/report.R output/input.csv cqc_by_msoa.csv
     needs: [generate_study_population, setup_cqc]
     outputs:
       moderately_sensitive:

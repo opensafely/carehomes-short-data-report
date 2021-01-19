@@ -17,8 +17,8 @@ library(knitr)
 # library(here)
 # setwd(here::here())
 
-args <- c("output/input.csv", "output/cqc_by_msoa.csv")
-# args = commandArgs(trailingOnly=TRUE)
+# args <- c("input.csv", "cqc_by_msoa.csv")
+args = commandArgs(trailingOnly=TRUE)
 
 options(datatable.old.fread.datetime.character=TRUE)
 
