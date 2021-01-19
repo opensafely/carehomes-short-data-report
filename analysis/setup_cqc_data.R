@@ -71,7 +71,7 @@ cqc_msoa <- cqc_select %>%
   summarise(n = n(), 
             n.beds = sum(care.homes.beds, na.rm = T))
 
-write.csv(cqc_select, "cqc_all.csv", row.names = F)
-write.csv(cqc_msoa, "cqc_by_msoa.csv", row.names = F)
+write.csv(cqc_select, "./output/cqc_all.csv", row.names = F)
+write.csv(cqc_msoa, "./output/cqc_by_msoa.csv", row.names = F)
 
 sink()
