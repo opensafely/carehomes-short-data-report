@@ -1,0 +1,16 @@
+{
+  "files": {
+    "opensafely-ethnicity.csv": {
+      "id": "opensafely/ethnicity/2020-04-27",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/ethnicity/2020-04-27/",
+      "downloaded_at": "2021-01-20 15:13:13.166218Z",
+      "sha": "3d2f3998b71863a80b24d60f6f4282e14191ae13"
+    },
+    "opensafely-nhs-england-care-homes-residential-status-ctv3.csv": {
+      "id": "opensafely/nhs-england-care-homes-residential-status-ctv3/1e037bde",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/nhs-england-care-homes-residential-status-ctv3/1e037bde/",
+      "downloaded_at": "2021-01-20 15:13:13.275744Z",
+      "sha": "102f795e818a1886b128aa75da265378e1d16fba"
+    }
+  }
+}
