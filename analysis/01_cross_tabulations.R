@@ -19,9 +19,15 @@ logfile <- file("./analysis/01_cross_tabulations.txt")
 sink(logfile, append=TRUE)
 sink(logfile, append=TRUE, type="message")
 
-# Read in Data ------------------------------------------------------------
+args = commandArgs(trailingOnly=TRUE)
 
-study_population <- fread("output/input.csv", data.table = FALSE, na.strings = "")
+print("These are my input arguments")
+print(args[1])
+
+inputdata <- toString(args[1]) 
+
+# Read in Data -----------------------------------------------------------
+input <- fread(inputdata, data.table = FALSE, na.strings = "")
 
 # Define care home variables  ---------------------------------------------
 

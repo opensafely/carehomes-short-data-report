@@ -12,7 +12,7 @@ actions:
         cohort: output/input.csv
 
   01_cross_tabulations:
-    run: r:latest 01_cross_tabulations.R 
+    run: r:latest analysis/01_cross_tabulations.R ./output/input_2019.csv
     outputs:
       moderately_sensitive:
         log: analysis/01_cross_tabulations.txt
