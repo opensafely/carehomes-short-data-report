@@ -11,3 +11,10 @@ actions:
       highly_sensitive:
         cohort: output/input.csv
 
+  01_cross_tabulations:
+    run: r:latest 01_cross_tabulations.R 
+    outputs:
+      moderately_sensitive:
+        log: analysis/01_cross_tabulations.txt
+
+
