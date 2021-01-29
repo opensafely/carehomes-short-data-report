@@ -1,3 +1,13 @@
+opensafely/dementia/2020-04-22
+opensafely/ethnicity/2020-04-27
+opensafely/chronic-respiratory-disease/2020-04-10
 opensafely/chronic-cardiac-disease/2020-04-08
+opensafely/haematological-cancer/2020-04-15
+opensafely/lung-cancer/2020-04-15
+opensafely/cancer-excluding-lung-and-haematological/2020-04-15
+opensafely/diabetes/2020-04-15
+opensafely/chronic-kidney-disease/2020-04-14
+opensafely/stroke-updated/2020-06-02
 opensafely/chronic-liver-disease/2020-06-02
-opensafely/asthma-inhaler-salbutamol-medication/2020-04-15
+opensafely/chronic-liver-disease/2020-06-02
+opensafely/nhs-england-care-homes-residential-status-ctv3/1e037bde

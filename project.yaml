@@ -5,16 +5,17 @@ expectations:
 
 actions:
 
-  generate_study_population:
+  00_generate_cohort:
     run: cohortextractor:latest generate_cohort --study-definition study_definition
     outputs:
       highly_sensitive:
         cohort: output/input.csv
 
-  run_model:
-    run: stata-mp:latest analysis/model.do
-    needs: [generate_study_population]
+  01_cross_tabulations:
+    run: r:latest analysis/01_cross_tabulations.R ./output/input.csv
+    needs: [00_generate_cohort]
     outputs:
       moderately_sensitive:
-        log: logs/model.log
+        log: analysis/01_cross_tabulations.txt
+
 
