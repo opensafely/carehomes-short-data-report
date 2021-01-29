@@ -24,10 +24,13 @@ args = commandArgs(trailingOnly=TRUE)
 print("These are my input arguments")
 print(args[1])
 
+print("This is my workspace")
+getwd() 
+
 inputdata <- toString(args[1]) 
 
 # Read in Data -----------------------------------------------------------
-input <- fread(inputdata, data.table = FALSE, na.strings = "")
+study_population <- fread(inputdata, data.table = FALSE, na.strings = "")
 
 # Define care home variables  ---------------------------------------------
 
