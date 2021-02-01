@@ -53,6 +53,8 @@ study_population <- study_population %>%
 
 # Household ages and size  
 study_population <- study_population %>% 
+  # replace invalid household ID with missing, otherwise missclassified as a single household 
+  mutate(household_id = replace(household_id, household_id <= 0, NA)) %>% 
   # if more than 4 people in household >= 65, class everyone in the household as being in a care home
   # first make indicator for people >= 65 
   mutate(old = ifelse(age >= 65, 1, 0)) %>% 
