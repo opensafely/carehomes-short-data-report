@@ -1,0 +1,51 @@
+[1] "These are my input arguments"
+[1] "./output/input.csv"
+[1] "This is my workspace"
+[1] "/workspace"
+[1] "SNOMED code prevalence, ever"
+ snomed_carehome_ever       n percent
+                    0 4430133 100.00%
+                Total 4430133 100.00%
+[1] "SNOMED code prevalence, past year"
+ snomed_carehome_pastyear       n percent
+                        0 4430133 100.00%
+                    Total 4430133 100.00%
+[1] "Address linkage prevalence"
+ tpp_care_home       n percent valid_percent
+             0 4281570  96.65%        97.70%
+             1  100974   2.28%         2.30%
+          <NA>   47589   1.07%             -
+         Total 4430133 100.00%       100.00%
+[1] "Household size and age prevalence"
+ household_care_home       n percent
+                   0 3789947  85.55%
+                   1  640186  14.45%
+               Total 4430133 100.00%
+[1] "Recent vs Past"
+ snomed_carehome_ever       0
+                    0 4430133
+                Total 4430133
+[1] "Diagnostic vs address"
+ snomed_carehome_ever       0      1   NA_
+                    0 4281570 100974 47589
+                Total 4281570 100974 47589
+[1] "Household vs address"
+ household_care_home       0      1   NA_
+                   0 3776182  13751    14
+                   1  505388  87223 47575
+               Total 4281570 100974 47589
+[1] "Household vs Diagnostic"
+ household_care_home       0
+                   0 3789947
+                   1  640186
+               Total 4430133
+[1] "OVerlap across identification methods"
+# A tibble: 6 x 4
+  snomed_carehome_ever tpp_care_home household_care_home       n
+                 <dbl>         <dbl>               <dbl>   <int>
+1                    0             0                   0 3776182
+2                    0             0                   1  505388
+3                    0             1                   0   13751
+4                    0             1                   1   87223
+5                    0            NA                   0      14
+6                    0            NA                   1   47575
