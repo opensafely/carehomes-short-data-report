@@ -2,6 +2,8 @@
 [1] "./output/input.csv"
 [1] "This is my workspace"
 [1] "/workspace"
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      0 1450324 4237276 4324357 7058652 9740726 
 [1] "SNOMED code prevalence, ever"
  snomed_carehome_ever       n percent
                     0 4430133 100.00%
@@ -17,10 +19,11 @@
           <NA>   47589   1.07%             -
          Total 4430133 100.00%       100.00%
 [1] "Household size and age prevalence"
- household_care_home       n percent
-                   0 3789947  85.55%
-                   1  640186  14.45%
-               Total 4430133 100.00%
+ household_care_home       n percent valid_percent
+                   0 3789947  85.55%        97.21%
+                   1  108927   2.46%         2.79%
+                <NA>  531259  11.99%             -
+               Total 4430133 100.00%       100.00%
 [1] "Recent vs Past"
  snomed_carehome_ever       0
                     0 4430133
@@ -32,20 +35,24 @@
 [1] "Household vs address"
  household_care_home       0      1   NA_
                    0 3776182  13751    14
-                   1  505388  87223 47575
+                   1   24069  84858     0
+                <NA>  481319   2365 47575
                Total 4281570 100974 47589
 [1] "Household vs Diagnostic"
  household_care_home       0
                    0 3789947
-                   1  640186
+                   1  108927
+                <NA>  531259
                Total 4430133
 [1] "OVerlap across identification methods"
-# A tibble: 6 x 4
+# A tibble: 8 x 4
   snomed_carehome_ever tpp_care_home household_care_home       n
                  <dbl>         <dbl>               <dbl>   <int>
 1                    0             0                   0 3776182
-2                    0             0                   1  505388
-3                    0             1                   0   13751
-4                    0             1                   1   87223
-5                    0            NA                   0      14
-6                    0            NA                   1   47575
+2                    0             0                   1   24069
+3                    0             0                  NA  481319
+4                    0             1                   0   13751
+5                    0             1                   1   84858
+6                    0             1                  NA    2365
+7                    0            NA                   0      14
+8                    0            NA                  NA   47575
