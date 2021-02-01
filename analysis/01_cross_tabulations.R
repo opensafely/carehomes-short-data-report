@@ -65,6 +65,8 @@ study_population <- study_population %>%
   # if old_count is >= 4, assign as in a care home 
   mutate(household_care_home = ifelse(old_count >= 4, 1, 0)) 
 
+summary(study_population$household_id)
+
 # Tabulations  ------------------------------------------------------------
 
 print("SNOMED code prevalence, ever")
