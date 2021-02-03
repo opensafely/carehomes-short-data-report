@@ -15,7 +15,7 @@ library(tidyverse)
 library(janitor)
 
 # Send output to an output text file
-logfile <- file("./analysis/01_cross_tabulations.txt")
+logfile <- file("./output/01_cross_tabulations.txt")
 sink(logfile, append=TRUE)
 sink(logfile, append=TRUE, type="message")
 
