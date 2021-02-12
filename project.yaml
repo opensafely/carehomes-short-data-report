@@ -16,6 +16,6 @@ actions:
     needs: [00_generate_cohort]
     outputs:
       moderately_sensitive:
-        log: analysis/01_cross_tabulations.txt
+        log: output/01_cross_tabulations.txt
 
 
