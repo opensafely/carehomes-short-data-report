@@ -18,7 +18,12 @@ library(janitor)
 mainDir <- getwd() 
 subDir <- "./analysis/outfiles"
 
-dir.create(file.path(mainDir, subDir))
+if (file.exists(subDir)){
+  print("Out directory exists")
+} else {
+  dir.create(file.path(mainDir, subDir))
+  print("Out directory didn't exist, but I created it")
+}
 
 # Send output to an output text file in the output directory 
 logfile <- file("./analysis/outfiles/02_characteristics.txt")
