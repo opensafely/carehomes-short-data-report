@@ -12,9 +12,9 @@ ethnicity_codes = codelist_from_csv(
 )
 
 dementia_codes = codelist_from_csv(
-    "codelists/opensafely-dementia.csv", 
+    "codelists/opensafely-dementia-complete.csv", 
     system="ctv3", 
-    column="CTV3ID"
+    column="code",
 )
 
 chronic_respiratory_disease_codes = codelist_from_csv(
@@ -56,17 +56,23 @@ other_cancer_codes = codelist_from_csv(
 chronic_liver_disease_codes = codelist_from_csv(
     "codelists/opensafely-chronic-liver-disease.csv", 
     system="ctv3", 
-    column="CTV3ID"
+    column="CTV3ID",
 )
 
 nhse_care_home_des_codes = codelist_from_csv(
     "codelists/opensafely-nhs-england-care-homes-residential-status-ctv3.csv", 
     system="ctv3", 
-    column="term"
+    column="code",
+)
+
+primis_codes = codelist_from_csv(
+    "codelists/primis-covid19-vacc-uptake-longres.csv", 
+    system="snomed", 
+    column="code",
 )
 
 stroke_codes = codelist_from_csv(
     "codelists/opensafely-stroke-updated.csv", 
     system="ctv3", 
-    column="CTV3ID"
+    column="CTV3ID",
 )

@@ -63,21 +63,22 @@ study = StudyDefinition(
         },
     ),
 
-    # SNOMED AND CTV3 CODES (extracted over different time periods to sense check)
-    # snomed ever
+    # CODED EVENTS (extracted over different time periods to sense check)
+    # incentivised codes ever
     snomed_carehome_ever=patients.with_these_clinical_events(
         nhse_care_home_des_codes,
         on_or_before="index_date",
         returning="binary_flag",
         return_expectations={"incidence": 0.1},
     ),
-    # snomed within past year 
+    # incentivised codes within past year 
     snomed_carehome_pastyear=patients.with_these_clinical_events(
         nhse_care_home_des_codes,
         between=["index_date - 1 year", "index_date"], 
         returning="binary_flag",
         return_expectations={"incidence": 0.1},
     ),
+
 
     # HOUSEHOLD RELATED VARIABLES 
     ## household ID  
@@ -99,7 +100,7 @@ study = StudyDefinition(
         },
     ),
     # mixed household flag 
-    tpp_household=patients.household_as_of(
+    nontpp_household=patients.household_as_of(
         "index_date",
         returning="has_members_in_other_ehr_systems",
         return_expectations={ "incidence": 0.75
