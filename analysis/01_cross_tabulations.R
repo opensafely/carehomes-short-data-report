@@ -14,23 +14,43 @@ library(data.table)
 library(tidyverse)
 library(janitor)
 
+# Create a subdirectory to save outputs in 
+mainDir <- getwd() 
+subDir <- "./analysis/outfiles"
+
+dir.create(file.path(mainDir, subDir))
+
 # Send output to an output text file
-logfile <- file("./output/01_cross_tabulations.txt")
+logfile <- file("./analysis/outfiles/01_cross_tabulations.txt")
 sink(logfile, append=TRUE)
 sink(logfile, append=TRUE, type="message")
 
-args = commandArgs(trailingOnly=TRUE)
+# Functions --------------------------------------------------------------
+# custom tabyls to reduce some typing for tabs and crosstabs 
 
-print("These are my input arguments")
-print(args[1])
+# 1. tabulate 
+# tabulate a single variable but add and format percentages  
+tabulate <- function(data,varname) { 
+  
+  {{data}} %>% 
+    tabyl({{varname}}) %>%
+    adorn_totals() %>%
+    adorn_pct_formatting(digits = 2)
+  
+}
 
-print("This is my workspace")
-getwd()
-
-inputdata <- toString(args[1])
+# 2. crosstabulate
+# tabulate two variables but add totals 
+crosstabulate <- function(data, varname1, varname2) { 
+  
+ {{data}} %>% 
+    tabyl({{varname1}}, {{varname2}}) %>%
+    adorn_totals()
+  
+} 
 
 # Read in Data -----------------------------------------------------------
-study_population <- fread(inputdata, data.table = FALSE, na.strings = "")
+study_population <- fread("./output/input.csv", data.table = FALSE, na.strings = "")
 
 # Define care home variables  ---------------------------------------------
 
@@ -64,90 +84,31 @@ study_population <- study_population %>%
   mutate(old_count = sum(old)) %>%
   ungroup() %>%
   mutate(
-    # if old_count is >= 4, assign as in a care home
-    household_care_home = ifelse(old_count >= 4, 1, 0),
+    # if old_count is >= 3, assign as in a care home
+    household_care_home = ifelse(old_count >= 3, 1, 0),
     # there are invalid household IDs. In a slightly hacky getaround put those with invalid hosuehold IDs to NA.
     household_care_home = ifelse(household_id<=0, NA, household_care_home)
   )
 
-summary(study_population$household_id)
+# save this dataset so it can be used in other actions 
+fwrite(study_population, "./output/study_population.csv")
 
 # Tabulations  ------------------------------------------------------------
 
-print("SNOMED code prevalence, ever")
-
-diagnostic_codes <- study_population %>%
-  tabyl(snomed_carehome_ever) %>%
-  adorn_totals() %>%
-  adorn_pct_formatting(digits = 2)
-
-diagnostic_codes
-
-print("SNOMED code prevalence, past year")
-
-diagnostic_codes_recent <- study_population %>%
-  tabyl(snomed_carehome_pastyear) %>%
-  adorn_totals() %>%
-  adorn_pct_formatting(digits = 2)
-
-diagnostic_codes_recent
-
-print("Address linkage prevalence")
-
-address_linkage <- study_population %>%
-  tabyl(tpp_care_home) %>%
-  adorn_totals() %>%
-  adorn_pct_formatting(digits = 2)
-
-address_linkage
-
-print("Household size and age prevalence")
-
-hh_size_age <- study_population %>%
-  tabyl(household_care_home) %>%
-  adorn_totals() %>%
-  adorn_pct_formatting(digits = 2)
-
-hh_size_age
+tabulate(study_population, snomed_carehome_ever)
+tabulate(study_population, snomed_carehome_pastyear)
+tabulate(study_population, household_care_home)
+tabulate(study_population, tpp_care_home)
 
 # Cross Tabulations (2 x 2)  ----------------------------------------------
-## only considering care home codes ever in the first round of this apart from internal check
 ## have not added percentages as there is no gold standard, so row vs column both seemed hard to interpret
 
-print("Recent vs Past")
-
-diagnostics <- study_population %>%
-  tabyl(snomed_carehome_ever, snomed_carehome_pastyear) %>%
-  adorn_totals()
-
-diagnostics
-
-print("Diagnostic vs address")
-
-diagnostic_address <- study_population %>%
-  tabyl(snomed_carehome_ever, tpp_care_home) %>%
-  adorn_totals()
-
-diagnostic_address
-
-print("Household vs address")
-
-household_address <- study_population %>%
-  tabyl(household_care_home, tpp_care_home) %>%
-  adorn_totals()
-
-household_address
-
-print("Household vs Diagnostic")
-
-household_snomed <- study_population %>%
-  tabyl(household_care_home, snomed_carehome_ever) %>%
-  adorn_totals()
-
-household_snomed
+crosstabulate(study_population, snomed_carehome_ever, snomed_carehome_pastyear) 
+crosstabulate(study_population, snomed_carehome_ever, tpp_care_home) 
+crosstabulate(study_population, household_care_home, tpp_care_home) 
+crosstabulate(study_population, household_care_home, snomed_carehome_ever) 
 
 # Summary of Identification Methods  --------------------------------------
-## add percentage and counts of people identified using each combination of method
 
 carehome_methods <- c("snomed_carehome_ever", "tpp_care_home", "household_care_home")
 
