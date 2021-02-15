@@ -15,6 +15,8 @@ actions:
     run: r:latest analysis/01_cross_tabulations.R 
     needs: [00_generate_cohort]
     outputs:
+      highly_sensitive: 
+        data: output/study_population.csv
       moderately_sensitive:
         log: analysis/outfiles/01_cross_tabulations.txt
 
