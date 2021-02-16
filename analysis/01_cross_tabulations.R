@@ -59,11 +59,13 @@ study_population <- fread("./output/input.csv", data.table = FALSE, na.strings =
 
 # Define care home variables  ---------------------------------------------
 
-# Diagnostic codes
+# Coded Events 
 study_population <- study_population %>%
   ## replace missing entries codes with zero
   mutate(snomed_carehome_ever = replace_na(snomed_carehome_ever, 0),
-         snomed_carehome_pastyear = replace_na(snomed_carehome_pastyear, 0))
+         snomed_carehome_pastyear = replace_na(snomed_carehome_pastyear, 0), 
+         primis_carehome_ever = replace_na(primis_carehome_ever, 0),
+         primis_carehome_pastyear = replace_na(primis_carehome_pastyear, 0))
 
 # Address Linkage
 study_population <- study_population %>%
@@ -102,6 +104,8 @@ fwrite(study_population, "./output/study_population.csv")
 
 tabulate(study_population, snomed_carehome_ever)
 tabulate(study_population, snomed_carehome_pastyear)
+tabulate(study_population, primis_carehome_ever)
+tabulate(study_population, primis_carehome_pastyear)
 tabulate(study_population, household_care_home)
 tabulate(study_population, tpp_care_home)
 
@@ -109,13 +113,17 @@ tabulate(study_population, tpp_care_home)
 ## have not added percentages as there is no gold standard, so row vs column both seemed hard to interpret
 
 crosstabulate(study_population, snomed_carehome_ever, snomed_carehome_pastyear) 
-crosstabulate(study_population, snomed_carehome_ever, tpp_care_home) 
+crosstabulate(study_population, primis_carehome_ever, primis_carehome_pastyear) 
+crosstabulate(study_population, snomed_carehome_ever, primis_carehome_ever) 
+
+
+crosstabulate(study_population, primis_carehome_ever, tpp_care_home) 
 crosstabulate(study_population, household_care_home, tpp_care_home) 
-crosstabulate(study_population, household_care_home, snomed_carehome_ever) 
+crosstabulate(study_population, household_care_home, primis_carehome_ever) 
 
 # Summary of Identification Methods  --------------------------------------
 
-carehome_methods <- c("snomed_carehome_ever", "tpp_care_home", "household_care_home")
+carehome_methods <- c("primis_carehome_ever", "tpp_care_home", "household_care_home")
 
 ch_methods_summary <- study_population %>%
   count(across(all_of(carehome_methods)))
