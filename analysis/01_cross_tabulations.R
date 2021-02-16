@@ -122,10 +122,13 @@ crosstabulate(study_population, household_care_home, tpp_care_home)
 crosstabulate(study_population, household_care_home, primis_carehome_ever) 
 
 # Summary of Identification Methods  --------------------------------------
+# replace NAs with zero for quick cross check across methods 
 
 carehome_methods <- c("primis_carehome_ever", "tpp_care_home", "household_care_home")
 
 ch_methods_summary <- study_population %>%
+  mutate(household_care_home = replace_na(household_care_home, 0), 
+         tpp_care_home = replace_na(tpp_care_home, 0)) %>% 
   count(across(all_of(carehome_methods)))
 
 print("OVerlap across identification methods")
