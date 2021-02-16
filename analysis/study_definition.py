@@ -79,6 +79,21 @@ study = StudyDefinition(
         return_expectations={"incidence": 0.1},
     ),
 
+    #primis codes ever 
+    primis_carehome_ever=patients.with_these_clinical_events(
+        primis_codes,
+        on_or_before="index_date",
+        returning="binary_flag",
+        return_expectations={"incidence": 0.1},
+    ),
+    
+    #primis codes within past year 
+    primis_carehome_pastyear=patients.with_these_clinical_events(
+        primis_codes,
+        between=["index_date - 1 year", "index_date"], 
+        returning="binary_flag",
+        return_expectations={"incidence": 0.1},
+    ),
 
     # HOUSEHOLD RELATED VARIABLES 
     ## household ID  

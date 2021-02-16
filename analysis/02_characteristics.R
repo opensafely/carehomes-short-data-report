@@ -52,7 +52,7 @@ tabulate_many <- function(data, filtervar, ...) {
   
     {{data}} %>% 
     filter({{filtervar}} == 1) %>% 
-    select(...) %>% 
+    select(all_of(...)) %>% 
     summarise(
     across(
       .cols  = everything(),
@@ -75,25 +75,23 @@ study_population <- fread("./output/study_population.csv", data.table = FALSE, n
 summary(study_population$tpp_coverage) 
 
 # create variables to summarise coverage at different levels 
-care_home_coverage <- study_population %>% 
+household_coverage <- study_population %>% 
   # restrict to existing household IDs and calculate coverage by household
   filter(!is.na(household_id)) %>% 
-  group_by(household_id) %>% 
-  # create a series of cutoffs to estimate % of care homes with different coverage (expecting NAs to be retained)
+  distinct(household_id, .keep_all = TRUE) %>% 
+  # create a series of cutoffs to estimate % of households with different coverage (expecting NAs to be retained)
   mutate(tpp_coverage_75 = if_else(tpp_coverage >=75, 1, 0), 
          tpp_coverage_80 = if_else(tpp_coverage >=80, 1, 0), 
          tpp_coverage_85 = if_else(tpp_coverage >=85, 1, 0), 
          tpp_coverage_90 = if_else(tpp_coverage >=90, 1, 0), 
-         tpp_coverage_95 = if_else(tpp_coverage >=95, 1, 0)) %>% 
-  ungroup() %>% 
-  distinct(household_id, .keep_all = TRUE)
+         tpp_coverage_95 = if_else(tpp_coverage >=95, 1, 0))
 
 # tabulate (old way as I want to check the NAs)
-tabulate(care_home_coverage, tpp_coverage_75)
-tabulate(care_home_coverage, tpp_coverage_80)
-tabulate(care_home_coverage, tpp_coverage_85)
-tabulate(care_home_coverage, tpp_coverage_90)
-tabulate(care_home_coverage, tpp_coverage_95)
+tabulate(household_coverage, tpp_coverage_75)
+tabulate(household_coverage, tpp_coverage_80)
+tabulate(household_coverage, tpp_coverage_85)
+tabulate(household_coverage, tpp_coverage_90)
+tabulate(household_coverage, tpp_coverage_95)
 
 # Data Management  --------------------------------------------------------
 # need to create indicator variables to tabulate characteristics 
@@ -121,8 +119,11 @@ tabulate_many(study_population, tpp_care_home, tabvars)
 print("Household care home characteristics")
 tabulate_many(study_population, household_care_home, tabvars)
 
-print("Coded events care home characteristics")
-tabulate_many(study_population, total, tabvars)
+print("Coded events care home characteristics; SNOMED incentivised")
+tabulate_many(study_population, snomed_carehome_ever, tabvars)
+
+print("Coded events care home characteristics; PRIMIS")
+tabulate_many(study_population, primis_carehome_ever, tabvars)
 
 # send output back to screen
 sink()
