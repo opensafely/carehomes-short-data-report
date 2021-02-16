@@ -84,14 +84,20 @@ household_coverage <- study_population %>%
          tpp_coverage_80 = if_else(tpp_coverage >=80, 1, 0), 
          tpp_coverage_85 = if_else(tpp_coverage >=85, 1, 0), 
          tpp_coverage_90 = if_else(tpp_coverage >=90, 1, 0), 
-         tpp_coverage_95 = if_else(tpp_coverage >=95, 1, 0))
+         tpp_coverage_95 = if_else(tpp_coverage >=95, 1, 0), 
+         total = 1)
 
-# tabulate (old way as I want to check the NAs)
-tabulate(household_coverage, tpp_coverage_75)
-tabulate(household_coverage, tpp_coverage_80)
-tabulate(household_coverage, tpp_coverage_85)
-tabulate(household_coverage, tpp_coverage_90)
-tabulate(household_coverage, tpp_coverage_95)
+# tabulate 
+covars <- c("tpp_coverage_75", "tpp_coverage_80", "tpp_coverage_85", "tpp_coverage_90", "tpp_coverage_95")
+
+print("TPP coverage per household")
+tabulate_many(household_coverage, total, covars)
+
+carehome_coverage <- household_coverage %>% 
+  filter(household_care_home == 1)
+
+print("TPP coverage per care home")
+tabulate_many(carehome_coverage, total, covars)
 
 # Data Management  --------------------------------------------------------
 # need to create indicator variables to tabulate characteristics 
