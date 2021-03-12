@@ -1,13 +1,9 @@
-# OpenSAFELY Research Template
+# Identifying Care Home Residents in Electronic Health Records - An OpenSAFELY Short Data Report
 
-This is a template repository for making new OpenSAFELY resarch projects.
+This is the code and configuration for our shot data report on the identification of care home residents within OpenSAFELY-TPP.
+Our work has recently been submitted, and we will link to the pre-print as soon as this is available. 
 
-# _title goes here_
-
-This is the code and configuration for our paper, _name goes here_
-
-* The paper is [here]()
-* Raw model outputs, including charts, crosstabs, etc, are in `released_outputs/`
+* Raw model outputs, including crosstabs, etc, are in `released_outputs/`
 * If you are interested in how we defined our variables, take a look at the [study definition](analysis/study_definition.py); this is written in `python`, but non-programmers should be able to understand what is going on there
 * If you are interested in how we defined our code lists, look in the [codelists folder](./codelists/).
 * Developers and epidemiologists interested in the framework should review [the OpenSAFELY documentation](https://docs.opensafely.org)
