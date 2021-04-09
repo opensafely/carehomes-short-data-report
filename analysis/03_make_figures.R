@@ -3,9 +3,9 @@
 # Program:     03_figures.R
 # Author:      Anna Schultze
 # Description: Make a Venn and bar chart from the summary data 
-# Input:       the input is hard coded for now because of time and lack of required package on server
+# Input:       the input is hard coded because the required package is not available on the OS server as of yet
 #              input is taken from the final output table of 01_cross_tabulations
-#              longer term I will use that output and read it in for automation, but will require adding eulerr to docker image 
+#              longer term I will use that output and read it in for automation, but will require adding eulerr to docker image on OS server 
 # Output:      figure in outfiles 
 # Edits:
 
@@ -27,7 +27,6 @@ plot(df1, quantities = TRUE)
 error_plot(df1)
 
 # Stacked Bar Charts ------------------------------------------------------
-# These % should not be hard coded but are for speed, using same output as graph above 
 
 Baseline_Method  <- c(rep(c("Address Linkage", "Household", "Coded Event"), each = 4))
 Overlap_Method  <- c(rep(c("Address Linkage", "Household", "Coded Event", "All Methods"), times = 3))
