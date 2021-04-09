@@ -1,6 +1,6 @@
 # Identifying Care Home Residents in Electronic Health Records - An OpenSAFELY Short Data Report
 
-This is the code and configuration for our shot data report on the identification of care home residents within OpenSAFELY-TPP.
+This is the code and configuration for our short data report on the identification of care home residents within OpenSAFELY-TPP.
 Our work has recently been submitted, and we will link to the pre-print as soon as this is available. 
 
 * Raw model outputs, including crosstabs, etc, are in `released_outputs/analysis/outfiles`
